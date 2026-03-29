@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dahril Falah | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                        accent: '#06b6d4',
+                        success: '#10b981',
+                        dark: '#0f172a',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-8px);
+            }
+        }
+    </style>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
+            z-index: 9999;
+            transition: width 0.1s;
+        }
+
+        #background-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.18;
+            animation: float 30s infinite ease-in-out;
+        }
+
+        .dark .blob {
+            opacity: 0.28;
+        }
+
+        .blob:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            background: #6366f1;
+            top: -300px;
+            left: -100px;
+        }
+
+        .blob:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            background: #8b5cf6;
+            top: 50%;
+            right: -150px;
+            animation-delay: 10s;
+        }
+
+        .blob:nth-child(3) {
+            width: 500px;
+            height: 500px;
+            background: #06b6d4;
+            bottom: -200px;
+            left: 20%;
+            animation-delay: 18s;
+        }
+
+        .floating-icon {
+            position: absolute;
+            opacity: 0.08;
+            animation: float 20s infinite ease-in-out;
+            pointer-events: none;
+            font-size: 40px;
+        }
+
+        .dark .floating-icon {
+            opacity: 0.12;
+        }
+
+        #cursor-glow {
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            transition: transform 0.15s ease-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-50px) rotate(8deg); }
+            66% { transform: translateY(30px) rotate(-8deg); }
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1.5s ease-in-out;
+        }
+
+        .modal-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-gray-800 dark:bg-dark dark:text-gray-100 transition-colors duration-300 relative">
+
+    <div id="scroll-progress"></div>
+
+    <!-- Background Animasi -->
+    <div id="background-blobs">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+    <div id="cursor-glow"></div>
+
+    <!-- Konten Utama -->
+    <div class="relative z-10">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-xl font-bold text-gradient bg-gradient-to-r from-primary to-secondary">
+                    Dahril.Net
+                </a>
+
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="hover:text-primary transition-colors">Home</a>
+                    <a href="#about" class="hover:text-primary transition-colors">About</a>
+                    <a href="#education" class="hover:text-primary transition-colors">Pendidikan</a>
+                    <a href="#skills" class="hover:text-primary transition-colors">Skills</a>
+                    <a href="#projects" class="hover:text-primary transition-colors">Projects</a>
+                    <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+                    <a href="#comments" class="hover:text-primary transition-colors">Komentar</a>
+                    
+                    <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fa fa-moon-o dark:hidden"></i>
+                        <i class="fa fa-sun-o hidden dark:block"></i>
+                    </button>
+                </div>
+
+                <button id="menuBtn" class="md:hidden text-2xl">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobileMenu" class="md:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex flex-col gap-4 pt-4">
+                    <a href="#home" class="hover:text-primary">Home</a>
+                    <a href="#about" class="hover:text-primary">About</a>
+                    <a href="#education" class="hover:text-primary">Pendidikan</a>
+                    <a href="#skills" class="hover:text-primary">Skills</a>
+                    <a href="#projects" class="hover:text-primary">Projects</a>
+                    <a href="#contact" class="hover:text-primary">Contact</a>
+                    <a href="#comments" class="hover:text-primary">Komentar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20 relative overflow-hidden">
+        
+        <!-- Ikon mengambang di background -->
+        <i class="fa fa-code floating-icon left-[10%] top-[20%]" style="animation-delay: 0s"></i>
+        <i class="fa fa-mobile floating-icon right-[15%] top-[30%]" style="animation-delay: 3s"></i>
+        <i class="fa fa-database floating-icon left-[20%] bottom-[30%]" style="animation-delay: 6s"></i>
+        <i class="fa fa-paint-brush floating-icon right-[25%] bottom-[25%]" style="animation-delay: 9s"></i>
+        <i class="fa fa-android floating-icon left-[40%] top-[15%]" style="animation-delay: 12s"></i>
+
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-up" data-aos-duration="1000">
+                    <p class="text-primary font-medium mb-3">👋 Halo, saya</p>
+                    <h1 class="text-[clamp(2.5rem,8vw,3.5rem)] font-bold mb-4">
+                        Dahril Falah Ramadhan Mufa
+                    </h1>
+                    <h2 class="text-[clamp(1.2rem,5vw,1.8rem)] text-gray-600 dark:text-gray-300 mb-6">
+                        <span class="text-gradient bg-gradient-to-r from-primary to-secondary">Mahasiswa PTI Semester 4</span>
+                    </h2>
+                    <p class="text-gray-500 dark:text-gray-400 text-lg mb-10">
+                        Universitas Negeri Surabaya. Pengembang aplikasi muda yang haus akan ilmu pemrograman dan desain 
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <a href="#projects" class="px-8 py-3 bg-primary hover:bg-primary/90 text-white rounded-lg font-medium transition-all shadow-lg hover:shadow-primary/20 hover:shadow-xl">
+                            Lihat Project
+                        </a>
+                        <a href="#contact" class="px-8 py-3 border border-gray-300 dark:border-gray-700 rounded-lg font-medium hover:border-primary hover:text-primary transition-all">
+                            Kontak Saya
+                        </a>
+                    </div>
+
+                    <!-- ✅ SOSIAL MEDIA DI HALAMAN PERTAMA ✅ -->
+                    <div class="flex gap-4 text-xl">
+                        <a href="https://wa.me/6282333013442" target="_blank" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-green-500 hover:bg-green-500/10 transition-all">
+                            <i class="fa fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.instagram.com/sir_atharos?igsh=bXR4NHVtd2QyMnRj" target="_blank" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-pink-500 hover:bg-pink-500/10 transition-all">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@atharos_comeback" target="_blank" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-gray-900 dark:hover:text-white hover:bg-gray-900/10 dark:hover:bg-white/10 transition-all">
+                            <i class="fa fa-music"></i>
+                        </a>
+                        <a href="https://github.com/GojoSotarou77" target="_blank" class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:text-gray-900 dark:hover:text-white transition-all">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div data-aos="fade-left" data-aos-delay="300" class="relative">
+                    <div class="relative mx-auto max-w-md">
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur-3xl opacity-30 animate-pulse"></div>
+                        <img 
+                            src="https://illustrations.popsy.co/violet/engineer.svg" 
+                            alt="Developer Illustration"
+                            class="relative animate-bounce" style="animation-duration: 6s"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <a href="#about" class="animate-bounce inline-block">
+                    <i class="fa fa-angle-down text-2xl text-gray-400"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
+                Tentang Saya
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right" data-aos-delay="200">
+                    <img 
+                        src="pp.png" 
+                        alt="Ilustrasi Mahasiswa"
+                        class="w-full max-w-md mx-auto"
+                    >
+                </div>
+
+                <div data-aos="fade-left" data-aos-delay="400">
+                    <h3 class="text-2xl font-semibold mb-4">
+                        Pengembang aplikasi dan mahasiswa teknologi pendidikan
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                        Tahun 2024 saya masuk Universitas Negeri Surabaya dan saat ini sudah menempuh semester 4 Program Studi Pendidikan Teknologi Informasi. Selain belajar mengenai dunia pendidikan, saya juga menghabiskan banyak waktu untuk belajar pengembangan aplikasi mobile dan desktop.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                        Saya percaya bahwa teknologi yang baik adalah teknologi yang bisa dimengerti dan dipakai oleh semua orang. Setiap project yang saya buat selalu saya usahakan memiliki pengalaman pengguna yang sederhana dan tidak membingungkan. Saat ini saya sedang banyak mendalami Flutter dan arsitektur aplikasi modern.
+                    </p>
+
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm">Mobile Development</span>
+                        <span class="px-4 py-2 bg-secondary/10 text-secondary rounded-full text-sm">Desktop App</span>
+                        <span class="px-4 py-2 bg-accent/10 text-accent rounded-full text-sm">Multimedia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Riwayat Pendidikan -->
+    <section id="education" class="py-24 bg-gray-50/50 dark:bg-gray-900/30 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
+                Riwayat Pendidikan
+            </h2>
+
+            <div class="max-w-2xl mx-auto relative">
+                <div class="absolute left-[18px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent"></div>
+
+                <div class="flex flex-col gap-8 ml-12">
+                    <div data-aos="fade-left" data-aos-delay="100">
+                        <div class="absolute left-0 w-[37px] h-[37px] rounded-full bg-primary flex items-center justify-center text-white">
+                            <i class="fa fa-university"></i>
+                        </div>
+                        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-5 rounded-xl shadow-sm card-hover">
+                            <h4 class="font-semibold text-lg">Universitas Negeri Surabaya</h4>
+                            <p class="text-primary font-medium mb-2">2024 - Sekarang | Semester 4</p>
+                            <p class="text-gray-600 dark:text-gray-300">S1 Pendidikan Teknologi Informasi</p>
+                        </div>
+                    </div>
+
+                    <div data-aos="fade-left" data-aos-delay="200">
+                        <div class="absolute left-0 w-[37px] h-[37px] rounded-full bg-secondary flex items-center justify-center text-white">
+                            <i class="fa fa-graduation-cap"></i>
+                        </div>
+                        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-5 rounded-xl shadow-sm card-hover">
+                            <h4 class="font-semibold text-lg">SMKN 1 Pungging</h4>
+                            <p class="text-secondary font-medium mb-2">2021 - 2024</p>
+                            <p class="text-gray-600 dark:text-gray-300">Jurusan Multimedia</p>
+                        </div>
+                    </div>
+
+                    <div data-aos="fade-left" data-aos-delay="300">
+                        <div class="absolute left-0 w-[37px] h-[37px] rounded-full bg-green-500 flex items-center justify-center text-white">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-5 rounded-xl shadow-sm card-hover">
+                            <h4 class="font-semibold text-lg">SMPN 1 Mojosari</h4>
+                            <p class="text-green-500 font-medium mb-2">2018 - 2021</p>
+                        </div>
+                    </div>
+
+                    <div data-aos="fade-left" data-aos-delay="400">
+                        <div class="absolute left-0 w-[37px] h-[37px] rounded-full bg-orange-500 flex items-center justify-center text-white">
+                            <i class="fa fa-home"></i>
+                        </div>
+                        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-5 rounded-xl shadow-sm card-hover">
+                            <h4 class="font-semibold text-lg">SDN Awang Awang</h4>
+                            <p class="text-orange-500 font-medium mb-2">2012 - 2018</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
+                Kemampuan Saya
+            </h2>
+
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-sm card-hover" data-aos="fade-up">
+                    <div class="flex justify-between mb-3">
+                        <span class="font-medium">Dart / Flutter</span>
+                        <span class="text-primary">85%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
+                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="85"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-sm card-hover" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex justify-between mb-3">
+                        <span class="font-medium">Java</span>
+                        <span class="text-primary">80%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
+                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="80"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-sm card-hover" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex justify-between mb-3">
+                        <span class="font-medium">VB.NET</span>
+                        <span class="text-primary">78%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
+                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="78"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-sm card-hover" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex justify-between mb-3">
+                        <span class="font-medium">PHP & MySQL</span>
+                        <span class="text-primary">75%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
+                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="75"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-sm card-hover" data-aos="fade-up" data-aos-delay="400">
+                    <div class="flex justify-between mb-3">
+                        <span class="font-medium">UI/UX & Multimedia</span>
+                        <span class="text-primary">88%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
+                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="88"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-sm card-hover" data-aos="fade-up" data-aos-delay="500">
+                    <div class="flex justify-between mb-3">
+                        <span class="font-medium">Git & Github</span>
+                        <span class="text-primary">82%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
+                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="82"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-gray-50/50 dark:bg-gray-900/30">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
+                Project Saya
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Project 1: ZeeZ -->
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm card-hover group" data-aos="fade-up">
+                    <img src="zeez.png" alt="ZeeZ Keuangan" class="w-full h-48 object-cover transition-all group-hover:scale-105">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">ZeeZ</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+                            Inovasi Digital dalam Mencatat dan Mengelola Keuangan Harian
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">Java</span>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button class="demo-btn px-4 py-2 bg-primary text-white rounded text-sm" data-project="zeez">Detail</button>
+                            <a href="https://github.com/fdwp03/ZeeZ.git" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded text-sm">Github</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Kas Point -->
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm card-hover group" data-aos="fade-up" data-aos-delay="100">
+                    <img src="kaspoint.png" alt="Kas Point" class="w-full h-48 object-cover transition-all group-hover:scale-105">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Kas Point</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+                            Sistem manajemen keuangan kas untuk sekolah
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">VB.NET</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">PHP</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">MySQL</span>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button class="demo-btn px-4 py-2 bg-primary text-white rounded text-sm" data-project="kaspoint">Detail</button>
+                            <a href="https://github.com/Zzhdi000/ProjekKeuanganSekolah.git" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded text-sm">Github</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Beli.L -->
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm card-hover group" data-aos="fade-up" data-aos-delay="200">
+                    <img src="beliel.jpg" alt="Beli.L" class="w-full h-48 object-cover transition-all group-hover:scale-105">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Beli.L</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+                            Aplikasi E-Commerce mobile dengan Flutter
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">Flutter</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">Dart</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">BLoC</span>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button class="demo-btn px-4 py-2 bg-primary text-white rounded text-sm" data-project="belil">Detail</button>
+                            <a href="hhttps://github.com/fdwp03/Flutter-TDD-Clean-Architecture-E-Commerce-App-main.git" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded text-sm">Github</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
+                Hubungi Saya
+            </h2>
+
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
+                <div data-aos="fade-right">
+                    <h3 class="text-xl font-semibold mb-6">Mari berbicara</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-8">
+                        Jangan ragu untuk menghubungi saya jika anda ingin berkolaborasi, bertanya sesuatu atau hanya menyapa.
+                    </p>
+
+                    <div class="flex flex-col gap-4 mb-8">
+                        <a href="mailto:dahrilfalah@gmail.com" class="flex items-center gap-4 hover:text-primary transition-colors">
+                            <i class="fa fa-envelope w-6 text-center"></i>
+                            <span>dahrilfalah01@gmail.com</span>
+                        </a>
+                        <a href="https://wa.me/6282333013442" class="flex items-center gap-4 hover:text-primary transition-colors">
+                            <i class="fa fa-whatsapp w-6 text-center"></i>
+                            <span>+62 823 3301 3442</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div data-aos="fade-left">
+                    <form class="flex flex-col gap-4">
+                        <input 
+                            type="text" 
+                            placeholder="Nama Lengkap" 
+                            class="px-4 py-3 rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 outline-none focus:border-primary transition-colors"
+                        >
+                        <input 
+                            type="email" 
+                            placeholder="Email" 
+                            class="px-4 py-3 rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 outline-none focus:border-primary transition-colors"
+                        >
+                        <textarea 
+                            placeholder="Pesan" 
+                            rows="4"
+                            class="px-4 py-3 rounded-lg bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 outline-none focus:border-primary transition-colors resize-none"
+                        ></textarea>
+
+                        <button class="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-all">
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ✅ SECTION KOMENTAR ✅ -->
+    <section id="comments" class="py-24 bg-gray-50/50 dark:bg-gray-900/30">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
+                Komentar & Pesan
+            </h2>
+
+            <div class="max-w-3xl mx-auto" data-aos="fade-up">
+                <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6">
+                    <p class="mb-6 text-gray-600 dark:text-gray-300 text-center">
+                        Kamu bisa meninggalkan komentar, pesan, kesan atau saran untuk website ini
+                    </p>
+                    
+                    <!-- Ganti kode dibawah ini dengan kode Giscus milik kamu -->
+                    <script src="https://giscus.app/client.js"
+                        data-repo="dahrilfalah/portfolio"
+                        data-repo-id="ISI_DENGAN_REPO_ID_KAMU"
+                        data-category="Announcements"
+                        data-category-id="ISI_DENGAN_CATEGORY_ID_KAMU"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="preferred_color_scheme"
+                        data-lang="id"
+                        crossorigin="anonymous"
+                        async>
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500">
+                    © 2025 Dahrilrmdhn. Barang siapa, Barang guwe.
+                </p>
+
+                <div class="flex gap-6">
+                    <a href="https://wa.me/6282333013442" class="text-gray-500 hover:text-green-500 transition-colors text-xl">
+                        <i class="fa fa-whatsapp"></i>
+                    </a>
+                    <a href="https://www.instagram.com/sir_atharos?igsh=bXR4NHVtd2QyMnRj" class="text-gray-500 hover:text-pink-500 transition-colors text-xl">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@atharos_comeback" class="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors text-xl">
+                        <i class="fa fa-music"></i>
+                    </a>
+                    <a href="https://github.com/GojoSotarou77" class="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors text-xl">
+                        <i class="fa fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    </div>
+
+    <!-- Modal Detail Project -->
+    <div id="projectModal" class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="modal-content bg-white dark:bg-gray-800 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 id="modalTitle" class="text-2xl font-bold"></h3>
+                    <button id="closeModal" class="text-2xl text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <img id="modalImage" src="" alt="" class="w-full h-64 object-cover rounded-lg mb-6">
+                <div id="modalDescription" class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6"></div>
+                <a id="modalGithub" href="#" class="inline-block px-6 py-2 bg-primary text-white rounded-lg">
+                    <i class="fa fa-github mr-2"></i> Lihat di Github
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, duration: 800, offset: 100 });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + "%";
+        });
+
+        // Navbar Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50) {
+                navbar.classList.add('bg-white/80', 'dark:bg-dark/80', 'backdrop-blur-md', 'shadow-sm');
+            } else {
+                navbar.classList.remove('bg-white/80', 'dark:bg-dark/80', 'backdrop-blur-md', 'shadow-sm');
+            }
+        });
+
+        // Dark Mode
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark');
+        darkModeToggle.addEventListener('click', () => document.documentElement.classList.toggle('dark'));
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Progress Bar
+        const progressBars = document.querySelectorAll('.progress-bar');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.width = `${entry.target.dataset.progress}%`;
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        progressBars.forEach(bar => observer.observe(bar));
+
+        // Cursor Glow
+        const cursorGlow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = `${e.clientX - 175}px`;
+            cursorGlow.style.top = `${e.clientY - 175}px`;
+        });
+
+        // Modal Project
+        const projectsData = {
+            zeez: {
+                title: 'ZeeZ - Aplikasi Keuangan Harian',
+                image: 'https://picsum.photos/id/20/800/400',
+                description: 'ZeeZ adalah aplikasi manajemen keuangan pribadi yang dibuat untuk membantu pengguna mencatat pemasukan dan pengeluaran sehari-hari dengan mudah. Dibuat menggunakan bahasa pemrograman Java dengan antarmuka yang sederhana dan mudah dimengerti. Aplikasi ini juga memiliki fitur laporan bulanan dan grafik statistik keuangan.',
+                github: 'https://github.com/dahrilfalah/zeez'
+            },
+            kaspoint: {
+                title: 'Kas Point - Sistem Keuangan Sekolah',
+                image: 'https://picsum.photos/id/180/800/400',
+                description: 'Sistem informasi manajemen kas sekolah yang dibangun menggunakan VB.NET untuk aplikasi desktop dan PHP MyAdmin sebagai database management system. Menggunakan XAMPP sebagai server lokal. Aplikasi ini dapat mencatat transaksi, membuat laporan keuangan, dan mengelola data siswa yang membayar kas.',
+                github: 'https://github.com/dahrilfalah/kaspoint'
+            },
+            belil: {
+                title: 'Beli.L - Aplikasi E-Commerce Flutter',
+                image: 'https://picsum.photos/id/160/800/400',
+                description: 'Proyek ini adalah etalase praktik pengembangan aplikasi seluler modern, yang memanfaatkan kekuatan Flutter, Clean Architecture, dan paket BLoC (Business Logic Component). Dibangun menggunakan Flutter 3 versi terbaru, aplikasi E-Commerce ini mencontohkan praktik terbaik untuk membangun aplikasi Flutter yang scalable, maintainable, dan efisien.',
+                github: 'https://github.com/dahrilfalah/flutter-beli.el'
+            }
+        }
+
+        const modal = document.getElementById('projectModal');
+        const closeModal = document.getElementById('closeModal');
+
+        document.querySelectorAll('.demo-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const projectId = btn.dataset.project;
+                const project = projectsData[projectId];
+                
+                document.getElementById('modalTitle').textContent = project.title;
+                document.getElementById('modalImage').src = project.image;
+                document.getElementById('modalDescription').textContent = project.description;
+                document.getElementById('modalGithub').href = project.github;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+    </script>
+</body>
+</html>
