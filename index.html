@@ -142,6 +142,49 @@
             transition: transform 0.15s ease-out;
         }
 
+        /* ✅ CSS BARU UNTUK FITUR YANG KAMU MINTA ✅ */
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: #6366f1;
+            margin-left: 4px;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .profile-border {
+            position: relative;
+            border-radius: 24px;
+            padding: 4px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4, #6366f1);
+            background-size: 300% 300%;
+            animation: gradientRotate 8s ease infinite;
+            transition: all 0.4s ease;
+        }
+
+        .profile-border:hover {
+            transform: scale(1.03) rotate(1deg);
+            box-shadow: 0 20px 60px -15px rgba(99, 102, 241, 0.4);
+        }
+
+        .profile-border img {
+            border-radius: 20px;
+            display: block;
+        }
+
+        @keyframes gradientRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             33% { transform: translateY(-50px) rotate(8deg); }
@@ -210,6 +253,7 @@
                     <a href="#home" class="hover:text-primary transition-colors">Home</a>
                     <a href="#about" class="hover:text-primary transition-colors">About</a>
                     <a href="#education" class="hover:text-primary transition-colors">Pendidikan</a>
+                    <a href="#experience" class="hover:text-primary transition-colors">Pengalaman</a>
                     <a href="#skills" class="hover:text-primary transition-colors">Skills</a>
                     <a href="#projects" class="hover:text-primary transition-colors">Projects</a>
                     <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
@@ -231,6 +275,7 @@
                     <a href="#home" class="hover:text-primary">Home</a>
                     <a href="#about" class="hover:text-primary">About</a>
                     <a href="#education" class="hover:text-primary">Pendidikan</a>
+                    <a href="#experience" class="hover:text-primary">Pengalaman</a>
                     <a href="#skills" class="hover:text-primary">Skills</a>
                     <a href="#projects" class="hover:text-primary">Projects</a>
                     <a href="#contact" class="hover:text-primary">Contact</a>
@@ -257,8 +302,10 @@
                     <h1 class="text-[clamp(2.5rem,8vw,3.5rem)] font-bold mb-4">
                         Dahril Falah Ramadhan Mufa
                     </h1>
-                    <h2 class="text-[clamp(1.2rem,5vw,1.8rem)] text-gray-600 dark:text-gray-300 mb-6">
-                        <span class="text-gradient bg-gradient-to-r from-primary to-secondary">Mahasiswa PTI Semester 4</span>
+                    <!-- ✅ ANIMASI KETIK DISINI ✅ -->
+                    <h2 class="text-[clamp(1.2rem,5vw,1.8rem)] text-gray-600 dark:text-gray-300 mb-6 h-[2.2rem] md:h-[2.5rem]">
+                        <span id="typewriter" class="text-gradient bg-gradient-to-r from-primary to-secondary"></span>
+                        <span class="typewriter-cursor"></span>
                     </h2>
                     <p class="text-gray-500 dark:text-gray-400 text-lg mb-10">
                         Universitas Negeri Surabaya. Pengembang aplikasi muda yang haus akan ilmu pemrograman dan desain 
@@ -320,13 +367,14 @@
 
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div data-aos="fade-right" data-aos-delay="200">
-                    <img 
-    src="assets/ppfiks.png" 
-    alt="Ilustrasi Mahasiswa"
-    class="w-full max-w-md mx-auto"
-    data-aos="fade-right" 
-    data-aos-delay="200"
->
+                    <!-- ✅ FOTO PROFIL DENGAN BORDER KEREN ✅ -->
+                    <div class="profile-border w-full max-w-md mx-auto">
+                        <img 
+                            src="assets/ppfiks.png" 
+                            alt="Foto Dahril Falah"
+                            class="w-full"
+                        >
+                    </div>
                 </div>
 
                 <div data-aos="fade-left" data-aos-delay="400">
@@ -358,7 +406,7 @@
             </h2>
 
             <div class="max-w-2xl mx-auto relative">
-                <div class="absolute left-[18px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent"></div>
+                <div class="absolute left-[18px] top-0 bottom-0 w-0.5 bg-gradient-to-b dari-primary via-secondary to-accent"></div>
 
                 <div class="flex flex-col gap-8 ml-12">
                     <div data-aos="fade-left" data-aos-delay="100">
@@ -407,8 +455,114 @@
         </div>
     </section>
 
+    <!-- ✅ SECTION PENGALAMAN BARU ✅ -->
+    <section id="experience" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
+                Pengalaman Saya
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                
+                <!-- Kolom Kiri: Pengalaman Kerja & Magang -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-6 flex items-center gap-2" data-aos="fade-up">
+                        <i class="fa fa-briefcase text-primary"></i>
+                        Pengalaman Kerja
+                    </h3>
+
+                    <div class="flex flex-col gap-4">
+                        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-5 rounded-xl shadow-sm card-hover" data-aos="fade-up" data-aos-delay="100">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-print"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">Ananda Printing</h4>
+                                    <p class="text-primary font-medium mb-2">Magang | 2023 - 2024</p>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3">Percetakan Mojosari, Mojokerto</p>
+                                    
+                                    <ul class="text-gray-600 dark:text-gray-300 text-sm space-y-1.5">
+                                        <li class="flex items-start gap-2">
+                                            <i class="fa fa-check text-success text-xs mt-1"></i>
+                                            Mengelola kas dan keuangan harian perusahaan
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <i class="fa fa-check text-success text-xs mt-1"></i>
+                                            Menentukan harga dan penawaran produk cetak
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <i class="fa fa-check text-success text-xs mt-1"></i>
+                                            Melatih siswa magang dan karyawan baru
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <i class="fa fa-check text-success text-xs mt-1"></i>
+                                            Kegiatan sosial: kerja bakti bersih masjid & musholla
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Pengalaman Organisasi -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-6 flex items-center gap-2" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fa fa-users text-secondary"></i>
+                        Pengalaman Organisasi
+                    </h3>
+
+                    <div class="flex flex-col gap-4">
+                        
+                        <!-- Ketua -->
+                        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-5 rounded-xl shadow-sm card-hover" data-aos="fade-up" data-aos-delay="300">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-crown"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">Ketua Karang Taruna</h4>
+                                    <span class="inline-block px-3 py-1 bg-secondary/10 text-secondary rounded-full text-xs mb-2">2 Periode</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Wakil Ketua -->
+                        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-5 rounded-xl shadow-sm card-hover" data-aos="fade-up" data-aos-delay="400">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-accent/10 text-accent flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-handshake-o"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">Wakil Ketua Karang Taruna</h4>
+                                    <span class="inline-block px-3 py-1 bg-accent/10 text-accent rounded-full text-xs mb-2">3 Periode</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bendahara & Sekretaris -->
+                        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-5 rounded-xl shadow-sm card-hover" data-aos="fade-up" data-aos-delay="500">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-book"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">Bendahara & Sekretaris</h4>
+                                    <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs mb-2">2 Periode</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- Skills Section -->
-    <section id="skills" class="py-24">
+    <section id="skills" class="py-24 bg-gray-50/50 dark:bg-gray-900/30">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
                 Kemampuan Saya
@@ -441,7 +595,7 @@
                         <span class="text-primary">78%</span>
                     </div>
                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
-                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="78"></div>
+                        <div class="progress-bar bg-gradient-to-r dari-primary to-secondary" data-progress="78"></div>
                     </div>
                 </div>
 
@@ -451,7 +605,7 @@
                         <span class="text-primary">75%</span>
                     </div>
                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
-                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="75"></div>
+                        <div class="progress-bar bg-gradient-to-r dari-primary to-secondary" data-progress="75"></div>
                     </div>
                 </div>
 
@@ -461,7 +615,7 @@
                         <span class="text-primary">88%</span>
                     </div>
                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
-                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="88"></div>
+                        <div class="progress-bar bg-gradient-to-r dari-primary to-secondary" data-progress="88"></div>
                     </div>
                 </div>
 
@@ -471,7 +625,7 @@
                         <span class="text-primary">82%</span>
                     </div>
                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full">
-                        <div class="progress-bar bg-gradient-to-r from-primary to-secondary" data-progress="82"></div>
+                        <div class="progress-bar bg-gradient-to-r dari-primary to-secondary" data-progress="82"></div>
                     </div>
                 </div>
             </div>
@@ -479,7 +633,7 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-24 bg-gray-50/50 dark:bg-gray-900/30">
+    <section id="projects" class="py-24">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
                 Project Saya
@@ -546,7 +700,7 @@
 
                         <div class="flex gap-3">
                             <button class="demo-btn px-4 py-2 bg-primary text-white rounded text-sm" data-project="belil">Detail</button>
-                            <a href="hhttps://github.com/fdwp03/Flutter-TDD-Clean-Architecture-E-Commerce-App-main.git" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded text-sm">Github</a>
+                            <a href="https://github.com/fdwp03/Flutter-TDD-Clean-Architecture-E-Commerce-App-main.git" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded text-sm">Github</a>
                         </div>
                     </div>
                 </div>
@@ -555,7 +709,7 @@
         </div>
     </section>
 
-<section id="contact" class="py-24">
+<section id="contact" class="py-24 bg-gray-50/50 dark:bg-gray-900/30">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
                 Hubungi Saya
@@ -614,7 +768,7 @@
     </section>
 
     <!-- ✅ SECTION KOMENTAR ✅ -->
-    <section id="comments" class="py-24 bg-gray-50/50 dark:bg-gray-900/30">
+    <section id="comments" class="py-24">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-16" data-aos="fade-up">
                 Komentar & Pesan
@@ -626,7 +780,6 @@
                         Kamu bisa meninggalkan komentar, pesan, kesan atau saran untuk website ini
                     </p>
                     
-                    <!-- Ganti kode dibawah ini dengan kode Giscus milik kamu -->
                    <script src="https://giscus.app/client.js"
                             data-repo="GojoSotarou77/Web-portofolio-dahril-falah-"
                             data-repo-id="R_kgDORzsNKg"
@@ -748,6 +901,53 @@
             cursorGlow.style.left = `${e.clientX - 175}px`;
             cursorGlow.style.top = `${e.clientY - 175}px`;
         });
+
+        // ✅ SCRIPT ANIMASI KETIK ✅
+        const typewriterText = [
+            "Mahasiswa PTI Semester 4",
+            "Pengembang Aplikasi Mobile",
+            "Flutter & Dart Enthusiast",
+            "Pengurus Karang Taruna",
+            "Suka Belajar Hal Baru"
+        ];
+
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typeSpeed = 120;
+        const deleteSpeed = 60;
+        const delayAfterText = 2000;
+
+        function typeWriter() {
+            const currentText = typewriterText[textIndex];
+            
+            if(!isDeleting) {
+                document.getElementById('typewriter').textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+                
+                if(charIndex === currentText.length) {
+                    isDeleting = true;
+                    setTimeout(typeWriter, delayAfterText);
+                    return;
+                }
+            } else {
+                document.getElementById('typewriter').textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+                
+                if(charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % typewriterText.length;
+                }
+            }
+            
+            setTimeout(typeWriter, isDeleting ? deleteSpeed : typeSpeed);
+        }
+
+        // Jalankan animasi setelah halaman siap
+        window.addEventListener('load', () => {
+            setTimeout(typeWriter, 1000);
+        });
+
 
         // Modal Project
         const projectsData = {
